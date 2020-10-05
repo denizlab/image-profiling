@@ -1,14 +1,18 @@
 import numpy as np
 import pandas as pd
+import os
 import h5py
 
 from preprocessing import extract_feature
 
 def main():
-    pipeline('images')
+    OAI_df = pipeline(iteration_OAI)
+    OAI_df.to_csv('OAI_stat.csv')
+    NYU_df = pipeline(iteration_NYU)
+    NYU_df.to_csv('NYU_stat.csv')
 
 # Image profiling pipeline
-def pipeline(iteration_choice, max_data):
+def pipeline(iteration_choice, max_data = 100):
     image_array = iteration_choice(max_data = max_data)
     df = extract_feature(image_array)
     return df
@@ -27,7 +31,7 @@ def loader_h5py(image_file):
 def iteration_OAI(max_data = 100):
     images_dir = '/gpfs/data/denizlab/Users/bz1030/data/OAI_2020/'
     OAI_csv = '/gpfs/data/denizlab/Users/bz1030/data/OAI_2020/train.csv'
-    OAI_data = pd.read_csv(sup_contents)
+    OAI_data = pd.read_csv(OAI_csv)
     image_array = []
     for index in range(max_data):
         image_path = get_OAI_path(images_dir, OAI_data, index)
@@ -54,7 +58,7 @@ def get_OAI_path(images_dir, OAI_data, index):
 # Loading iteration for NYU
 def iteration_NYU(max_data = 100):
     NYU_csv = '/gpfs/data/denizlab/Users/jt3545/bofei_test/i17-Data-Process-Infer/nyu_data_unsup_noTKR.csv'
-    NYU_data = pd.read_csv(unsup_contents)
+    NYU_data = pd.read_csv(NYU_csv)
     image_array = []
     for index in range(max_data):
         image_path = get_NYU_path(NYU_data, index)

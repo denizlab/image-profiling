@@ -36,17 +36,19 @@ def iteration(images_dir):
 # In:  numpy array of an image
 # Out: features in a dictionary
 def get_features(image):
-    q = np.quantile(image.reshape(-1), [0.25, 0.5, 0.75])
+    #q = np.quantile(image.reshape(-1), [0.25, 0.5, 0.75])
+    channel = 1 if len(image.shape) <=2 else image.shape[2] # Verify channel
     features =  {'width' : image.shape[0], 
                  'height' : image.shape[1], 
-                 'channel': image.shape[2], 
+                 'channel': channel, 
                  'mean' : image.mean(), 
                  'max' : image.max(), 
                  'min' : image.min(), 
                  'variance' : image.var(),
-                 '25% quantile' : q[0], 
-                 'median' : q[1], 
-                 '75% quantile' : q[2]}
+                 #'25% quantile' : q[0], 
+                 #'median' : q[1], 
+                 #'75% quantile' : q[2]
+                 }
     return features
 
 # Feature extraction
