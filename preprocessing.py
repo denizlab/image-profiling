@@ -63,7 +63,7 @@ def extract_feature(image_array):
 def profiling(df, profile_name):
     import pandas_profiling
     profile = df.profile_report()
-    profile.to_file(prefile_name, '.html')
+    profile.to_file(profile_name, '.html')
 
 # Save image
 def Write_image(array, image_name):

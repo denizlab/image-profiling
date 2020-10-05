@@ -1,18 +1,24 @@
 import numpy as np
 import pandas as pd
 import os
-import h5py
 
-from preprocessing import extract_feature
+from preprocessing import extract_feature, profiling
 
 def main():
-    OAI_df = pipeline(iteration_OAI)
-    OAI_df.to_csv('OAI_stat.csv')
-    NYU_df = pipeline(iteration_NYU)
-    NYU_df.to_csv('NYU_stat.csv')
+    #OAI_df = pipeline(iteration_OAI)
+    #OAI_df.to_csv('OAI_stat.csv')
+    #NYU_df = pipeline(iteration_NYU)
+    #NYU_df.to_csv('NYU_stat.csv')
+    OAI_df = pd.read_csv('OAI_stat.csv')
+    NYU_df = pd.read_csv('NYU_stat.csv')
+    profiling(OAI_df, 'OAI')
+    profiling(NYU_df, 'NYU')
+
+
 
 # Image profiling pipeline
 def pipeline(iteration_choice, max_data = 100):
+    import h5py # Only used here
     image_array = iteration_choice(max_data = max_data)
     df = extract_feature(image_array)
     return df
